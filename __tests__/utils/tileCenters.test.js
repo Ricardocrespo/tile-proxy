@@ -1,4 +1,4 @@
-const { tileToLatLon, latLonToTile } = require('../../utils/ports');
+const { tileToLatLon, latLonToTile } = require('../../utils/tileCenters');
 const haversine = require('../../utils/haversine');
 
 describe('tileToLatLon', () => {

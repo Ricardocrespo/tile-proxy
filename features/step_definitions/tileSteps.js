@@ -54,7 +54,7 @@ When('I request tile {string}', async function (path) {
   const api = nock('https://api.maptiler.com')
     .get(/.*/)
     .reply(() => {
-      nockCalled = true;
+      this.nockCalled = true;
       return [200, Buffer.from('real-data')];
     });
 
@@ -85,6 +85,6 @@ Then('the response body should be a Buffer', function () {
 });
 
 Then('no external request should be made', function () {
-  assert.strictEqual(nockCalled, false, 'Expected no external API call');
+  assert.strictEqual(this.nockCalled, false, 'Expected no external API call');
   assert.strictEqual(this.externalRequestMade, false, 'Expected tile to be served from local cache');
 });
