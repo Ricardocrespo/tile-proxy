@@ -35,4 +35,5 @@ function latLonToTile(lat, lon, z) {
 // This module exports two functions:
 // 1. `isWithinRange`: Checks if a given latitude and longitude are within a specified radius of any tile center defined in the `tileCenters.json` configuration file.
 // 2. `tileToLatLon`: Converts tile coordinates (z, x, y) to latitude and longitude.
+// 3. `latLonToTile`: Converts latitude and longitude to tile coordinates (x, y) at a given zoom level (z).
 module.exports = { isWithinRange, tileToLatLon, latLonToTile };
