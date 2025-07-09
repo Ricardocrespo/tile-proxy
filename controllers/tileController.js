@@ -1,5 +1,5 @@
 /* This file defines the route for handling tile requests in the tile proxy application.
- * It includes middleware for validating tile coordinates and checking proximity to allowed ports.
+ * It includes middleware for validating tile coordinates and checking proximity to allowed tile centers.
  */
 
 const express = require('express');
@@ -9,7 +9,7 @@ const { checkTileProximity } = require('../middleware/proximityCheck');
 const { validateTileCoords } = require('../validators/tileValidator');
 
 /* This route handles requests for map tiles.
- * It validates the tile coordinates, checks if the request is within proximity of allowed ports,
+ * It validates the tile coordinates, checks if the request is within proximity of allowed tile centers,
  * and retrieves the tile from the cache or the Map API.  
  * GET /tiles/:z/:x/:y
  * @param {string} z - Zoom level of the tile

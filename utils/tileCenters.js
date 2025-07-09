@@ -1,22 +1,21 @@
-// This module provides utility functions to work with port data.  
+// This module provides utility functions to work with tile center data.  
 
 const fs = require('fs');
 const path = require('path');
 const haversine = require('./haversine');
 
-const ports = JSON.parse(
-  fs.readFileSync(path.join(__dirname, '../config/ports.json'), 'utf8')
+const tileCenters = JSON.parse(
+  fs.readFileSync(path.join(__dirname, '../config/tileCenters.json'), 'utf8')
 );
 
 function isWithinRange(lat, lon, radius = 1.0) {
-  return ports.some(port => {
-    const d = haversine(lat, lon, port.lat, port.lon);
+  return tileCenters.some(center => {
+    const d = haversine(lat, lon, center.lat, center.lon);
     return d <= radius;
   });
 }
 
 function tileToLatLon(z, x, y) {
-  console.log('Correct tileToLatLon implementation loaded ✅');
 
   const n = Math.pow(2, z);
   const lon_deg = x / n * 360.0 - 180.0;
@@ -33,8 +32,8 @@ function latLonToTile(lat, lon, z) {
   return { x, y };
 }
 
-
 // This module exports two functions:
-// 1. `isWithinRange`: Checks if a given latitude and longitude are within a specified radius of any port defined in the `ports.json` configuration file.
-// 2. `tileToLatLon`: Converts tile coordinates (z, x, y) to latitude and longitude.    
+// 1. `isWithinRange`: Checks if a given latitude and longitude are within a specified radius of any tile center defined in the `tileCenters.json` configuration file.
+// 2. `tileToLatLon`: Converts tile coordinates (z, x, y) to latitude and longitude.
+// 3. `latLonToTile`: Converts latitude and longitude to tile coordinates (x, y) at a given zoom level (z).
 module.exports = { isWithinRange, tileToLatLon, latLonToTile };

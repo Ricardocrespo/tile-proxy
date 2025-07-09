@@ -1,8 +1,8 @@
 const { checkTileProximity } = require('../../middleware/proximityCheck');
-const { isWithinRange, tileToLatLon } = require('../../utils/ports');
+const { isWithinRange, tileToLatLon } = require('../../utils/tileCenters');
 
 // Mock tileToLatLon and isWithinRange
-jest.mock('../../utils/ports', () => ({
+jest.mock('../../utils/tileCenters', () => ({
   isWithinRange: jest.fn(),
   tileToLatLon: jest.fn(),
 }));
