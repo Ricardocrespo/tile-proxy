@@ -30,7 +30,24 @@ Before(async function (scenario) {
 });
 
 After({ tags: '@cache' }, async () => {
-  await fs.promises.rm(path.join(cacheDir, '16', '13388', '26665.png'), { force: true });
+  const tileFile = path.join(cacheDir, '16', '13388', '26665.png');
+  await fs.promises.rm(tileFile, { force: true });
+  // Remove parent directories if they are empty
+  let currentDir = path.dirname(tileFile); // Start with '13388'
+  while (currentDir !== cacheDir) { // Stop at the root cache directory
+    try {
+      const files = await fs.promises.readdir(currentDir);
+      if (files.length === 0) {
+        await fs.promises.rmdir(currentDir);
+        currentDir = path.dirname(currentDir); // Move up to the parent directory
+      } else {
+        break; // Stop if the directory is not empty
+      }
+    } catch (err) {
+      // Log error or handle it if necessary, then break
+      break;
+    }
+  }
 });
 
 
