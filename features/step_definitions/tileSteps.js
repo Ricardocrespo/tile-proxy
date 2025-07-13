@@ -1,13 +1,14 @@
 const { When, Then, Given } = require('@cucumber/cucumber');
+const nock = require('nock');
 const request = require('supertest');
 const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config({ path: '.env.test' }); // ensure this is before `app` is imported
 const app = require('../../app');
+const tileService = require('../../services/tileService');
 
 let response;
-let nockCalled = false;
 
 // This sets up shared test state or environment before each scenario
 Given('a running tile proxy server', function () {
@@ -18,43 +19,26 @@ Given('a running tile proxy server', function () {
 
 Given('a cached tile exists for {string}', async function (tilePath) {
   const parts = tilePath.split('/');
-  const [ , maybeTiles, z, x, file ] = parts;
+  const [ , , z, x, file ] = parts;
   const y = file.replace('.png', '');
-  const fullPath = path.join(
-    __dirname,
-    '../../cache',
-    maybeTiles === 'tiles' ? maybeTiles : 'tiles',
-    z,
-    x,
-    `${y}.png`
-  );
+  const tileKey = `${z}/${x}/${y}`;
 
-  await fs.promises.mkdir(path.dirname(fullPath), { recursive: true });
-
-  // Simple fake PNG header (doesn't need to be valid image for test)
+  // Fake tile data (valid enough for a PNG header)
   const fakeTileData = Buffer.from([0x89, 0x50, 0x4E, 0x47]);
-  await fs.promises.writeFile(fullPath, fakeTileData);
 
-  // Clear any prior mocks
+  // Inject directly into the LRU cache
+  tileService.__lruCache.set(tileKey, fakeTileData);
+
+  // Ensure external request is NOT called
   this.externalRequestMade = false;
-
-  // Ensure external request is *not* called
-  const nock = require('nock');
-  nock('https://api.maptiler.com')
-    .get(() => true)
-    .reply(() => {
-      this.externalRequestMade = true;
-      return [200, 'should not happen'];
-    });
 });
 
 When('I request tile {string}', async function (path) {
   // Intercept any MapTiler API calls and flag them
-  const nock = require('nock');
-  const api = nock('https://api.maptiler.com')
+  nock(/https:\/\/api\.maptiler\.com/)
     .get(/.*/)
     .reply(() => {
-      this.nockCalled = true;
+      this.externalRequestMade = true;
       return [200, Buffer.from('real-data')];
     });
 
@@ -85,6 +69,5 @@ Then('the response body should be a Buffer', function () {
 });
 
 Then('no external request should be made', function () {
-  assert.strictEqual(this.nockCalled, false, 'Expected no external API call');
   assert.strictEqual(this.externalRequestMade, false, 'Expected tile to be served from local cache');
 });
