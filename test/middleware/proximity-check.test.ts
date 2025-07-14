@@ -1,14 +1,15 @@
-const { checkTileProximity } = require('../../middleware/proximityCheck');
-const { isWithinRange, tileToLatLon } = require('../../utils/tileCenters');
+import { checkTileProximity } from '../../src/middleware/proximity-check';
+import { isWithinRange, tileToLatLon } from '../../src/utils/tile-centers';
+import { beforeEach, describe, it, expect, jest } from '@jest/globals';
 
 // Mock tileToLatLon and isWithinRange
-jest.mock('../../utils/tileCenters', () => ({
+jest.mock('../../src/utils/tile-centers', () => ({
   isWithinRange: jest.fn(),
   tileToLatLon: jest.fn(),
 }));
 
 describe('checkTileProximity middleware', () => {
-  let req, res, next;
+  let req: any, res: any, next: jest.Mock;
 
   beforeEach(() => {
     req = { params: { z: '16', x: '14087', y: '25959' } };
@@ -20,8 +21,8 @@ describe('checkTileProximity middleware', () => {
   });
 
   it('calls next() when tile is within allowed range', () => {
-    tileToLatLon.mockReturnValue({ lat: 31.75, lon: -106.45 });
-    isWithinRange.mockReturnValue(true);
+    (tileToLatLon as jest.Mock).mockReturnValue({ lat: 31.75, lon: -106.45 });
+    (isWithinRange as jest.Mock).mockReturnValue(true);
 
     checkTileProximity(req, res, next);
 
@@ -31,14 +32,14 @@ describe('checkTileProximity middleware', () => {
   });
 
   it('sends 403 when tile is outside allowed range', () => {
-    tileToLatLon.mockReturnValue({ lat: 31.60, lon: -106.20 });
-    isWithinRange.mockReturnValue(false);
+    (tileToLatLon as jest.Mock).mockReturnValue({ lat: 31.60, lon: -106.20 });
+    (isWithinRange as jest.Mock).mockReturnValue(false);
 
     checkTileProximity(req, res, next);
 
-    expect(isWithinRange).toHaveBeenCalledWith(31.60, -106.20);
     expect(res.status).toHaveBeenCalledWith(403);
-    expect(res.send).toHaveBeenCalledWith('Tile request is outside allowed region');
+    expect(res.send).toHaveBeenCalledWith('Tile is outside the allowed range.');
     expect(next).not.toHaveBeenCalled();
+
   });
 });

@@ -1,22 +1,24 @@
+import { BeforeAll, After, Before } from '@cucumber/cucumber';
+import * as fs from 'fs';
+import * as path from 'path';
+import nock from 'nock';
+
 /* This hook runs before each scenario to ensure a clean slate for the tile cache.
  * It removes the cache directory if it exists, allowing tests to run without stale data.
  * This is useful for ensuring that each test starts with a fresh state, especially when testing tile caching behavior.
  */
-const { BeforeAll, After, Before } = require('@cucumber/cucumber');
-const fs = require('fs');
-const path = require('path');
-const nock = require('nock');
 
-const cacheDir = path.join(__dirname, '../../cache/tiles');
+const cacheDir = path.join(__dirname, '../../test/cache/tiles');
 
 BeforeAll(async () => {
   // Ensure the cache directory exists
   await fs.promises.mkdir(cacheDir, { recursive: true });
+  nock.cleanAll();
+  nock.disableNetConnect();
+  nock.enableNetConnect('127.0.0.1'); 
 });
 
 Before(async function (scenario) {
-  nock.cleanAll();
-  this.nockCalled = false;
   this.externalRequestMade = false;
 
   const isCacheScenario = scenario.pickle.tags.some(tag => tag.name === '@cache');

@@ -16,6 +16,7 @@ This Tile Proxy is a lightweight service for fetching, caching, and serving map 
 
 - Node.js (v16+ recommended)
 - npm 
+- Docker
 
 ### Installation
 
@@ -27,7 +28,7 @@ npm install
 
 ### Configuration
 
-Create a `tileCenters.json` file within `config` folder based on the provided `config/tileCenters.example.json`. This file defines the geographical center points (latitude and longitude) that your application will frequently request tiles around. These should reflect known, fixed regions such as specific cities, border crossings, or landmarks where tile access is consistently needed.
+Create a `tile-centers.json` file within `config` folder based on the provided `config/tile-centers.example.json`. This file defines the geographical center points (latitude and longitude) that your application will frequently request tiles around. These should reflect known, fixed regions such as specific cities, border crossings, or landmarks where tile access is consistently needed.
 
 Each entry includes:
 
@@ -92,4 +93,4 @@ npm run test:features -- --tags "@cache"
 
 - Tests automatically load environment variables from `.env.test`
 - A temporary tile cache is created during `@cache` tests and cleaned up afterward
-- Make sure `config/tileCenters.json` is correctly configured if your tests depend on geographic filtering or the proximity check logic will give you false positives.
+- Make sure `config/tile-centers.json` is correctly configured if your tests depend on geographic filtering or the proximity check logic will give you false positives.
