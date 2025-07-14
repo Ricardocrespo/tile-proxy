@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 /* This function validates the tile coordinates in the request parameters.
  * It checks if the parameters z, x, and y are all numeric values.
  * If any of them are not numeric, it responds with a 400 Bad Request status and an error message.
@@ -9,18 +11,19 @@
  * 
  * @returns {void} - Returns nothing if validation passes, or sends a 400 error response if validation fails.
  */
-function validateTileCoords(req, res, next) {
+function validateTileCoords(req: Request, res: Response, next: NextFunction) {
   const { z, x, y } = req.params;
 
   if (![z, x, y].every(v => /^\d+$/.test(v))) {
     return res.status(422).send('Invalid tile coordinates');
   }
 
-  if (z < 0 || z > 20) {
+  const zoomLevel = parseInt(z, 10);
+  if (zoomLevel < 0 || zoomLevel > 20) {
     return res.status(422).send('Unsupported zoom level');
   }
 
   next();
 }
 
-module.exports = { validateTileCoords };
+export { validateTileCoords };

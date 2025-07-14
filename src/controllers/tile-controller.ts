@@ -2,11 +2,18 @@
  * It includes middleware for validating tile coordinates and checking proximity to allowed tile centers.
  */
 
-const express = require('express');
-const router = express.Router();
-const { getTile } = require('../services/tileService');
-const { checkTileProximity } = require('../middleware/proximityCheck');
-const { validateTileCoords } = require('../validators/tileValidator');
+import express, { Request, Response, Router } from 'express';
+import TileService from '../services/tile-service';
+import { checkTileProximity } from '../middleware/proximity-check';
+import { validateTileCoords } from '../validators/tile-validator';
+
+class TileController {
+  public router: Router;
+
+  constructor() {
+    this.router = express.Router();
+    this.initializeRoutes();
+  }
 
 /* This route handles requests for map tiles.
  * It validates the tile coordinates, checks if the request is within proximity of allowed tile centers,
@@ -17,20 +24,21 @@ const { validateTileCoords } = require('../validators/tileValidator');
  * @param {string} y - Y coordinate of the tile
  * @return {Object} - Returns the tile image as a PNG
  */
-router.get('/:z/:x/:y',
-  validateTileCoords,
-  checkTileProximity,
-  async (req, res) => {
+
+  private initializeRoutes(): void {
+    this.router.get('/:z/:x/:y', validateTileCoords, checkTileProximity, this.getTileHandler);
+  }
+  private async getTileHandler(req: Request, res: Response): Promise<void> {
     try {
       const { z, x, y } = req.params;
-      const tile = await getTile(z, x, y);
+      const tile = await TileService.getTile(z, x, y);
       res.setHeader('Content-Type', 'image/png');
       res.send(tile);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Tile fetch error:', err.message);
       res.status(500).send('Tile fetch error');
     }
   }
-);
+}
 
-module.exports = router;
+export default new TileController().router;

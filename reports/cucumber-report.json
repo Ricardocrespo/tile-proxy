@@ -1,0 +1,401 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "tile-proxy-routing;fetch-valid-tile",
+        "keyword": "Scenario",
+        "line": 7,
+        "name": "Fetch valid tile",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 265000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 99199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "I request tile \"/tiles/16/13388/26665\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 19641899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "I receive a 200 status code",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 132699
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@happy",
+            "line": 6
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "tile-proxy-routing;serve-tile-from-cache",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Serve tile from cache",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1817800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 51099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 13,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 44399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 14,
+            "name": "a cached tile exists for \"/tiles/16/13388/26665\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:21"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 934799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 15,
+            "name": "I request tile \"/tiles/16/13388/26665\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4295999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 16,
+            "name": "I receive a 200 status code",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 135999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "the response should be a PNG image",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:74"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 191299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 18,
+            "name": "the response body should be a Buffer",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:78"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 75199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "no external request should be made",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:82"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47199
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1927800
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@cache",
+            "line": 11
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "tile-proxy-routing;request-with-non-numeric-tile-coordinates",
+        "keyword": "Scenario",
+        "line": 22,
+        "name": "Request with non-numeric tile coordinates",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 156899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 45299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 23,
+            "name": "I request tile \"/tiles/foo/bar/baz\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4669999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 24,
+            "name": "I receive a 422 status code",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 56299
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@invalidCoords",
+            "line": 21
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "tile-proxy-routing;request-tile-far-from-any-port-of-entry",
+        "keyword": "Scenario",
+        "line": 27,
+        "name": "Request tile far from any port of entry",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 72499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 33200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 28,
+            "name": "I request tile \"/tiles/16/1/1\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3125700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 29,
+            "name": "I receive a 403 status code",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 42999
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@outOfBounds",
+            "line": 26
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "tile-proxy-routing;request-with-unsupported-zoom-level",
+        "keyword": "Scenario",
+        "line": 32,
+        "name": "Request with unsupported zoom level",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 49500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "a running tile proxy server",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:15"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 33,
+            "name": "I request tile \"/tiles/99/14059/26303\"",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:51"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3230999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 34,
+            "name": "I receive a 422 status code",
+            "match": {
+              "location": "src\\features\\step_definitions\\tile-steps.ts:69"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 43300
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@unsupportedZoom",
+            "line": 31
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "tile-proxy-routing",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Tile Proxy Routing",
+    "tags": [],
+    "uri": "src\\features\\tiles.feature"
+  }
+]

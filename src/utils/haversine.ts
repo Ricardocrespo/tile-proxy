@@ -9,9 +9,9 @@
  * @see {@link https://en.wikipedia.org/wiki/Haversine_formula|Haversine formula on Wikipedia}
  */
 
-function haversineDistance(lat1, lon1, lat2, lon2) {
+function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 3958.8;
-  const toRad = angle => (angle * Math.PI) / 180;
+  const toRad = (angle: number) => (angle * Math.PI) / 180;
 
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
@@ -25,4 +25,4 @@ function haversineDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-module.exports = haversineDistance;
+export default haversineDistance;
