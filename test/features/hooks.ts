@@ -8,7 +8,7 @@ import nock from 'nock';
  * This is useful for ensuring that each test starts with a fresh state, especially when testing tile caching behavior.
  */
 
-const cacheDir = path.join(__dirname, '../../cache/tiles');
+const cacheDir = path.join(__dirname, '../../test/cache/tiles');
 
 BeforeAll(async () => {
   // Ensure the cache directory exists
@@ -19,7 +19,6 @@ BeforeAll(async () => {
 });
 
 Before(async function (scenario) {
-  this.nockCalled = false;
   this.externalRequestMade = false;
 
   const isCacheScenario = scenario.pickle.tags.some(tag => tag.name === '@cache');

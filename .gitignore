@@ -27,7 +27,7 @@ dist/
 build/
 
 # Cache directories
-cache/tiles/*
+test/cache/tiles/*
 src/cache/tiles/*
 
 # Editor/IDE config
@@ -38,6 +38,7 @@ src/cache/tiles/*
 # Optional coverage/test output
 coverage/
 .nyc_output/
+reports/
 
 # Optional: ignore compiled TypeScript
 *.tsbuildinfo
