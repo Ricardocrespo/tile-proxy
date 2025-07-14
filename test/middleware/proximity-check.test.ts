@@ -37,11 +37,9 @@ describe('checkTileProximity middleware', () => {
 
     checkTileProximity(req, res, next);
 
-    // Mock tileToLatLon and isWithinRange
-    jest.mock('../../src/utils/tile-centers', () => ({
-      isWithinRange: jest.fn(),
-      tileToLatLon: jest.fn(),
-    }));
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.send).toHaveBeenCalledWith('Tile is outside the allowed range.');
+    expect(next).not.toHaveBeenCalled();
 
   });
 });
