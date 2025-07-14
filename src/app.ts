@@ -9,6 +9,9 @@ import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 import tileController from './controllers/tile-controller';
 
+// Load environment variables from .env file
+dotenv.config();
+
 const app = express();
 app.set('trust proxy', 1);
 

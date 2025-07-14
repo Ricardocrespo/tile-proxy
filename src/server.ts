@@ -1,6 +1,6 @@
 // server.ts
 // This file is the entry point for the tile proxy server
-import app from './src/app';
+import app from './app';
 
 const PORT: number = parseInt(process.env.PORT || '3000', 10);
 
