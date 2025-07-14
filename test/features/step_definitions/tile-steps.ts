@@ -18,12 +18,12 @@ Given('a running tile proxy server', function (): boolean {
 
 Given('a cached tile exists for {string}', async function (tilePath: string): Promise<void> {
   const parts = tilePath.split('/');
-  const [, maybeTiles, z, x, file] = parts;
+  const [, z, x, file] = parts;
   const y = file.replace('.png', '');
   const fullPath = path.join(
     __dirname,
     '../../cache',
-    maybeTiles === 'tiles' ? maybeTiles : 'tiles',
+    'tiles',
     z,
     x,
     `${y}.png`

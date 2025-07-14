@@ -4,8 +4,12 @@
  */
 import { LRUCache } from 'lru-cache';
 
+const CACHE_MAX = parseInt(process.env.CACHE_MAX || '200', 10); // Default: 200 items
+
+const CACHE_TTL = parseInt(process.env.CACHE_TTL || (1000 * 60 * 10).toString(), 10); // Default: 
+
 export class MemoryCache {
-  private cache = new LRUCache<string, Buffer>({ max: 200, ttl: 1000 * 60 * 10 });
+  private cache = new LRUCache<string, Buffer>({ max: CACHE_MAX, ttl: CACHE_TTL });
 
 /**
  * Retrieves a tile image from the memory cache.

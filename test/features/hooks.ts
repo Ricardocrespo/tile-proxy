@@ -13,8 +13,8 @@ const cacheDir = path.join(__dirname, '../../test/cache/tiles');
 BeforeAll(async () => {
   // Ensure the cache directory exists
   await fs.promises.mkdir(cacheDir, { recursive: true });
-   nock.cleanAll();
-   nock.disableNetConnect();
+  nock.cleanAll();
+  nock.disableNetConnect();
   nock.enableNetConnect('127.0.0.1'); 
 });
 

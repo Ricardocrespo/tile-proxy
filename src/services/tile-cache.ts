@@ -31,7 +31,7 @@ export class TileCache {
       return tileDataBuffer;
     } catch (err: any) {
         if (err.code === 'ENOENT') {
-            console.info(`${new Date().toISOString()} File system cache miss: ${key}`, err);
+            console.info(`${new Date().toISOString()} File system cache miss: ${key}`);
         } else {
             console.error(`${new Date().toISOString()} Error reading tile cache: ${err.message}`, err);
         }
