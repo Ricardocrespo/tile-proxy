@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
     "test": "cross-env NODE_ENV=test jest",
     "test:features": "cross-env NODE_ENV=test cucumber-js --require-module ts-node/register",
     "test:all": "npm-run-all test test:features"
