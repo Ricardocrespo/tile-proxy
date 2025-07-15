@@ -15,7 +15,7 @@ const tileCenters: TileCenter[] = JSON.parse(
 );
 
 // Function to check if a given latitude and longitude are within a specified radius of any tile center
-function isWithinRange(lat: number, lon: number, radius: number = 1.0): boolean {
+function isWithinRange(lat: number, lon: number, radius: number = 2.0): boolean {
   return tileCenters.some((center: TileCenter) => {
     const distance = haversineDistance(lat, lon, center.lat, center.lon);
     return distance <= radius;
